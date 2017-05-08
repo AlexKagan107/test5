@@ -31,5 +31,7 @@ namespace test4.Models
         
         public virtual DbSet<Clubs> Clubs { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+
+        public System.Data.Entity.DbSet<test4.Models.UserClubModel> UserClubModels { get; set; }
     }
 }

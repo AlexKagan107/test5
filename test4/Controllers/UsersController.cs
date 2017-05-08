@@ -50,11 +50,12 @@ namespace test4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Name,Password,FavoriteClub")] Users users)
         {
-            
+
             if (ModelState.IsValid)
             {
                 db.Users.Add(users);
                 await db.SaveChangesAsync();
+                await AddClubToUser2(users.Id, users.FavoriteClub);
                 return RedirectToAction("Index");
             }
 
@@ -128,14 +129,40 @@ namespace test4.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult AddClubToUser(int? Id,string ClubName)
+        public ActionResult AddClubToUser()
         {
-            Clubs club = db.Clubs.Find(ClubName);
-            Users user = db.Users.Find(Id);
+            ViewBag.ClubName = new SelectList(db.Clubs, "ClubName", "ClubName");
+            ViewBag.Id = new SelectList(db.Users, "Id", "Id");
+            return View();
+        }
 
-            user.Clubs.Add(club);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddClubToUser([Bind(Include = "Id,ClubName")] UserClubModel mode)
+        {
+            if (ModelState.IsValid)
+            {
+                Clubs club = await db.Clubs.FindAsync(mode.ClubName);
+                Users user = await db.Users.FindAsync(mode.Id);
+                user.Clubs.Add(club);
+                await db.SaveChangesAsync();
+                return RedirectToAction("AddClubToUser");
+            }
+            return View();
+        }
 
-            db.SaveChanges();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddClubToUser2(int Id, string ClubName)
+        {
+            if (ModelState.IsValid)
+            {
+                Clubs club = await db.Clubs.FindAsync(ClubName);
+                Users user = await db.Users.FindAsync(Id);
+                user.Clubs.Add(club);
+                await db.SaveChangesAsync();
+                return RedirectToAction("AddClubToUser");
+            }
             return View();
         }
 
