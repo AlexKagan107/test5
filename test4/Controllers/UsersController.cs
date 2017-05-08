@@ -109,13 +109,30 @@ namespace test4.Controllers
             return View(users);
         }
 
+        //// POST: Users/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> DeleteConfirmed(int id)
+        //{
+        //    Users users = await db.Users.FindAsync(id);
+        //    db.Users.Remove(users);
+        //    await db.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
+
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Users users = await db.Users.FindAsync(id);
+            Clubs[] clubArray = users.Clubs.ToArray<Clubs>();
+            for (int i = 0; i < clubArray.Length; i++)
+            {
+                users.Clubs.Remove(clubArray[i]);
+            }
             db.Users.Remove(users);
+
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
