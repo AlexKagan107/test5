@@ -18,8 +18,8 @@ namespace test4.Controllers
 
         public async Task<ActionResult> Index()
         {
-            ViewBag.userclub = db.UserClubModels.ToArray();
-            HttpContext.Session.Add("userclub", db.UserClubModels.ToArray());
+            //ViewBag.userclub = db.UserClubModels.ToArray();
+            //HttpContext.Session.Add("userclub", db.UserClubModels.ToArray());
             return View(await db.UserClubModels.ToListAsync());
         }
 

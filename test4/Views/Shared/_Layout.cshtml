@@ -20,8 +20,26 @@
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <ul class="nav navbar-nav"></ul>
+               
+
+                @if (Session["UserId"] != null)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Welcome : @Session["UserName"]</a></li>
+                        <li><a href="/Login/Logout">Logout</a></li>
+                    </ul>
+
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/Login/Login">Login</a></li>
+                        <li><a href="/Users/Create">Register</a></li>
+                    </ul>
+                }
+
+
             </div>
         </div>
     </div>
