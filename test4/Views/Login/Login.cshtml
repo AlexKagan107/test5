@@ -9,27 +9,30 @@
     @Html.AntiForgeryToken()
     <div class="form-group">
         <div class="col-md-12">
-            <h4>Login</h4>
+            <h2>Login</h2>
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Id" })
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Id" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-12">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+            </div>
         </div>
-    </div>
 
 
 
-    <div class="form-group">
-        <div class="col-md-12">
-            <a href="#" class="btn btn-primary" onclick="LoginUser()">Submit</a>
+        <div class="form-group">
+            <div class="col-md-12">
+                <a href="#" class="btn btn-default" onclick="LoginUser()">Submit</a>
+            </div>
         </div>
     </div>
 
@@ -38,7 +41,7 @@
 
 <script>
     var LoginUser = function () {
-       // debugger
+        // debugger
         var data = $("#myForm").serialize();
 
         $.ajax({
@@ -46,7 +49,7 @@
             url: "/Login/LoginUser",
             data: data,
             success: function (response) {
-               // debugger
+                // debugger
                 if (response == "fail") {
                     window.location.href = "/Login/Login";
                 }
@@ -58,4 +61,3 @@
         })
     }
 </script>
-
